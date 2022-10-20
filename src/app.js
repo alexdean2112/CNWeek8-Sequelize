@@ -2,13 +2,15 @@ const yargs = require("yargs")
 const {sequelize} = require("./db/connection")
 const {createMovie, readMovie, updateMovie, deleteMovie} = require("./movie/movieFunctions")
 const {createUser, readUser, updateUser, deleteUser} = require("./users/userFunctions")
+const {favMovie, searchMovies, searchUsers} = require("./queries/queries")
 
 
 const app = async (yargsObject) => {
+    // Functions for interacting with the movie table
     try {
         await sequelize.sync()
         if (yargsObject.createMovie) {
-            await createMovie({title: yargsObject.title, actor: yargsObject.actor, director: yargsObject.director})
+            await createMovie({title: yargsObject.title, actor: yargsObject.actor, director: yargsObject.director, user: parseInt(yargsObject.user)})
             let output = {}
             let table = await readMovie()
             for (let movie of table) {
@@ -16,6 +18,7 @@ const app = async (yargsObject) => {
                 output.title = movie.title
                 output.actor = movie.actor
                 output.director = movie.director
+                output.user = movie.user
                 console.log(output)
             }
         }
@@ -26,6 +29,7 @@ const app = async (yargsObject) => {
                 output.title = table.title
                 output.actor = table.actor
                 output.director = table.director
+                output.user = table.user
                 console.log(output)
         }
         else if (yargsObject.readAllMovie) {
@@ -36,11 +40,12 @@ const app = async (yargsObject) => {
                 output.title = movie.title
                 output.actor = movie.actor
                 output.director = movie.director
+                output.user = movie.user
                 console.log(output)
             }
         }
         else if (yargsObject.updateMovie) {
-            await updateMovie({title: yargsObject.title, actor: yargsObject.actor, director: yargsObject.director}, { [yargsObject.key] : [yargsObject.value] })
+            await updateMovie({title: yargsObject.title, actor: yargsObject.actor, director: yargsObject.director, user: parseInt(yargsObject.user)}, { [yargsObject.key] : [yargsObject.value] })
             let output = {}
             let table = await readMovie()
             for (let movie of table) {
@@ -48,6 +53,7 @@ const app = async (yargsObject) => {
                 output.title = movie.title
                 output.actor = movie.actor
                 output.director = movie.director
+                output.user = movie.user
                 console.log(output)
             }
         }
@@ -60,17 +66,19 @@ const app = async (yargsObject) => {
                 output.title = movie.title
                 output.actor = movie.actor
                 output.director = movie.director
+                output.user = movie.user
                 console.log(output)
             }
         }
+            // Functions for interacting with the user table
         if (yargsObject.createUser) {
-            await createUser({name: yargsObject.name, role: yargsObject.role})
+            await createUser({name: yargsObject.name, membership: yargsObject.membership})
             let output = {}
             let table = await readUser()
             for (let user of table) {
                 output.id = user.id
                 output.name = user.name
-                output.role = user.role
+                output.membership = user.membership
                 console.log(output)
             }
         }
@@ -79,7 +87,7 @@ const app = async (yargsObject) => {
             let table = await readUser({ [yargsObject.key] : yargsObject.value})
                 output.id = table.id
                 output.name = table.name
-                output.role = table.role
+                output.membership = table.membership
                 console.log(output)
         }
         else if (yargsObject.readAllUser) {
@@ -88,18 +96,18 @@ const app = async (yargsObject) => {
             for (let user of table) {
                 output.id = user.id
                 output.name = user.name
-                output.role = user.role
+                output.membership = user.membership
                 console.log(output)
             }
         }
         else if (yargsObject.updateUser) {
-            await updateUser({name: yargsObject.name, role: yargsObject.role}, { [yargsObject.key] : [yargsObject.value] })
+            await updateUser({name: yargsObject.name, membership: yargsObject.membership}, { [yargsObject.key] : [yargsObject.value] })
             let output = {}
             let table = await readUser()
             for (let user of table) {
                 output.id = user.id
                 output.name = user.name
-                output.role = user.role
+                output.membership = user.membership
                 console.log(output)
             }
         }
@@ -110,9 +118,19 @@ const app = async (yargsObject) => {
             for (let user of table) {
                 output.id = user.id
                 output.name = user.name
-                output.role = user.role
+                output.membership = user.membership
                 console.log(output)
             }
+        }
+        // Queries for the database
+        else if (yargsObject.searchMovies) {
+            await searchMovies({key: yargsObject.key, value: yargsObject.value})
+        }
+        else if (yargsObject.searchUsers) {
+            await searchUsers({key: yargsObject.key, value: yargsObject.value})
+        }
+        else if (yargsObject.favMovie) {
+            await favMovie({key: yargsObject.key, value: yargsObject.value})
         }
         else {
             console.log("Command not recognised")

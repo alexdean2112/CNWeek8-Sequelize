@@ -14,6 +14,10 @@ const Movie = sequelize.define("Movie", {
     director: {
         type: DataTypes.STRING,
         defaultValue: "Not specified",
+    },
+    user: {
+        type: DataTypes.INTEGER,
+        allowNull: false
     }
 })
 
