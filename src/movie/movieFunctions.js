@@ -1,4 +1,8 @@
+//<------------------------ Imports ------------------------->
+
 const Movie = require("./movieTable")
+
+//<------------------------ Create Function ------------------------->
 
 exports.createMovie = async (movieObject) => {
     try {
@@ -8,6 +12,8 @@ exports.createMovie = async (movieObject) => {
         console.log(error)
     }
 }
+
+//<------------------------ Read Function ------------------------->
 
 exports.readMovie = async (filterObject) => {
     try {
@@ -23,6 +29,8 @@ exports.readMovie = async (filterObject) => {
     }
 }
 
+//<------------------------ Update Function ------------------------->
+
 exports.updateMovie = async (movieObject, filterObject) => {
     try {
         await Movie.update(movieObject, {where: filterObject})
@@ -31,6 +39,8 @@ exports.updateMovie = async (movieObject, filterObject) => {
         console.log(error)
     }
 }
+
+//<------------------------ Delete Function ------------------------->
 
 exports.deleteMovie = async (filterObject) => {
     try {

@@ -1,5 +1,9 @@
+//<------------------------ Imports ------------------------->
+
 const {DataTypes} = require("sequelize")
 const {sequelize} = require("../db/connection")
+
+//<------------------------ User Table ------------------------->
 
 const User = sequelize.define("User", {
     name: {
@@ -11,5 +15,7 @@ const User = sequelize.define("User", {
         defaultValue: "Not specified",
     },
 })
+
+//<------------------------ Exports ------------------------->
 
 module.exports = User

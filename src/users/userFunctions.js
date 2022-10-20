@@ -1,4 +1,8 @@
+//<------------------------ Imports ------------------------->
+
 const User = require("./userTable")
+
+//<------------------------ Create Function ------------------------->
 
 exports.createUser = async (userObject) => {
     try {
@@ -8,6 +12,8 @@ exports.createUser = async (userObject) => {
         console.log(error)
     }
 }
+
+//<------------------------ Read Function ------------------------->
 
 exports.readUser = async (filterObject) => {
     try {
@@ -23,6 +29,8 @@ exports.readUser = async (filterObject) => {
     }
 }
 
+//<------------------------ Update Function ------------------------->
+
 exports.updateUser = async (userObject, filterObject) => {
     try {
         await User.update(userObject, {where: filterObject})
@@ -31,6 +39,8 @@ exports.updateUser = async (userObject, filterObject) => {
         console.log(error)
     }
 }
+
+//<------------------------ Delete Function ------------------------->
 
 exports.deleteUser = async (filterObject) => {
     try {

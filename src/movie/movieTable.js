@@ -1,5 +1,9 @@
+//<------------------------ Imports ------------------------->
+
 const {DataTypes} = require("sequelize")
 const {sequelize} = require("../db/connection")
+
+//<------------------------ Movie table ------------------------->
 
 const Movie = sequelize.define("Movie", {
     title: {
@@ -20,5 +24,7 @@ const Movie = sequelize.define("Movie", {
         allowNull: false
     }
 })
+
+//<------------------------ Exports ------------------------->
 
 module.exports = Movie
